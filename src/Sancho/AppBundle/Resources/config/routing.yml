@@ -1,0 +1,11 @@
+sancho_app_home:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'SanchoAppBundle:StaticPages:home.html.twig'
+
+sancho_app_help:
+    path: /help
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'SanchoAppBundle:StaticPages:help.html.twig'
