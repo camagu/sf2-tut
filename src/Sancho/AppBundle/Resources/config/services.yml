@@ -1,0 +1,7 @@
+parameters:
+#    sancho_app.example.class: Sancho\AppBundle\Example
+
+services:
+#    sancho_app.example:
+#        class: %sancho_app.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

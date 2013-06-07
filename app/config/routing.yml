@@ -1,0 +1,4 @@
+sancho_app:
+    resource: "@SanchoAppBundle/Resources/config/routing.yml"
+    prefix:   /
+
