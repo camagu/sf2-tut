@@ -9,3 +9,15 @@ sancho_app_help:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'SanchoAppBundle:StaticPages:help.html.twig'
+
+sancho_app_about:
+    path: /about
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'SanchoAppBundle:StaticPages:about.html.twig'
+
+sancho_app_contact:
+    path: /contact
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'SanchoAppBundle:StaticPages:contact.html.twig'

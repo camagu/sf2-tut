@@ -1,1 +1,16 @@
-a static page
+{% extends 'SanchoAppBundle::layout.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<h1>Sample App</h1>
+<p>
+    This is the home page for the Symfony2 Tutorial sample application.
+</p>
+<p>
+    Heavily based on the
+    <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>.
+</p>
+
+{% endblock %}
