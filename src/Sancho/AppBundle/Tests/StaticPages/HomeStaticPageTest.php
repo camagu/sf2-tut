@@ -22,9 +22,9 @@ class HomeStaticPageTest extends PageTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
 
-        $this->assertContains(
-            "{$this->baseTitle} | Home",
-            $crawler->filter('title')->text()
-        );
+        $title = $crawler->filter('title')->text();
+
+        $this->assertNotContains(' | Home', $title);
+        $this->assertContains($this->baseTitle, $title);
     }
 }

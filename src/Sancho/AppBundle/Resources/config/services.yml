@@ -2,6 +2,7 @@ parameters:
 #    sancho_app.example.class: Sancho\AppBundle\Example
 
 services:
-#    sancho_app.example:
-#        class: %sancho_app.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    sancho.twig.sancho_app_extension:
+        class: Sancho\AppBundle\Twig\SanchoAppExtension
+        tags:
+            - { name: twig.extension }
