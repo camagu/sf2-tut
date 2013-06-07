@@ -3,11 +3,35 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+            {% stylesheets 'bundles/sanchoapp/stylesheets/application.less' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        {{ include('SanchoAppBundle:Partials:_shim.html.twig') }}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block header %}
+            {{ include('SanchoAppBundle:Partials:_header.html.twig') }}
+        {% endblock %}
+
+        <div class="container">
+            {% block body %}{% endblock %}
+
+            {% block footer %}
+                {{ include('SanchoAppBundle:Partials:_footer.html.twig') }}
+            {% endblock %}
+        </div>
+
+        {% block javascripts %}
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script>window.jQuery || document.write('<script src="{{ asset('js/jquery.js') }}"><\/script>')</script>
+            <script src="{{ asset('js/bootstrap.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

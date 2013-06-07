@@ -6,25 +6,25 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class AboutStaticPageTest extends PageTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->crawler = $this->request('GET', 'sancho_app_about');
+    }
+
     public function testHeader()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/about');
-
         $this->assertContains(
             'About Us',
-            $crawler->filter('h1')->text()
+            $this->crawler->filter('h1')->text()
         );
     }
 
     public function testTitle()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/about');
-
         $this->assertContains(
-            "{$this->baseTitle} | About Us",
-            $crawler->filter('title')->text()
+            $this->fullTitle('About Us'),
+            $this->crawler->filter('title')->text()
         );
     }
 }

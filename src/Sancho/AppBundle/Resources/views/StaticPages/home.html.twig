@@ -3,14 +3,21 @@
 {% block title %}{{ full_title() }}{% endblock %}
 
 {% block body %}
+    <div class="center hero-unit">
+        <h1>Welcome to the Sample App</h1>
 
-<h1>Sample App</h1>
-<p>
-    This is the home page for the Symfony2 Tutorial sample application.
-</p>
-<p>
-    Heavily based on the
-    <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>.
-</p>
+        <p>
+            This is the home page for the Symfony2 Tutorial sample application.
+        </p>
+        <p>
+            Heavily based on the
+            <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>.
+        </p>
 
+        <a href="#" class="btn btn-large btn-primary">Sign up now!</a>
+    </div>
+
+    <a href="http://symfony.com">
+        <img src="{{ asset('bundles/sanchoapp/i/symfony_logo.png') }}" alt="Symfony2">
+    </a>
 {% endblock %}
