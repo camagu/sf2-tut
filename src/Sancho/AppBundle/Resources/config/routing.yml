@@ -21,3 +21,7 @@ sancho_app_contact:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'SanchoAppBundle:StaticPages:contact.html.twig'
+
+sancho_app_user:
+    resource: "@SanchoAppBundle/Controller/UserController.php"
+    type: annotation
