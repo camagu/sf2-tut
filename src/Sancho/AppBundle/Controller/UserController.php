@@ -12,7 +12,7 @@ class UserController extends Controller
      * @Route("/signup")
      * @Template
      */
-    public function createAction()
+    public function newAction()
     {
         return array();
     }

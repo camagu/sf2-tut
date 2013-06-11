@@ -33,15 +33,9 @@ abstract class PageTestCase extends WebTestCase
     /**
      * @dataProvider layoutLinksProvider
      */
-    public function testLayoutLinks($link, $expected)
+    public function testLayoutLinks($link, $route)
     {
-        $link = $this->requestPage()->selectLink($link)->link();
-        $this->client->click($link);
-
-        $this->assertEquals(
-            $expected,
-            $this->client->getRequest()->getRequestUri()
-        );
+        $this->linkTest($link, $route);
     }
 
     protected function fullTitle($title = '')
@@ -57,11 +51,11 @@ abstract class PageTestCase extends WebTestCase
     public function layoutLinksProvider()
     {
         return array(
-            array('About', $this->generatePath('sancho_app_about')),
-            array('Help', $this->generatePath('sancho_app_help')),
-            array('Contact', $this->generatePath('sancho_app_contact')),
-            array('Sign in', $this->generatePath('sancho_app_user_create')),
-            array('Sample App', $this->generatePath('sancho_app_home')),
+            array('About', 'sancho_app_about'),
+            array('Help', 'sancho_app_help'),
+            array('Contact', 'sancho_app_contact'),
+            array('Sign in', 'sancho_app_user_new'),
+            array('Sample App', 'sancho_app_home'),
         );
     }
 

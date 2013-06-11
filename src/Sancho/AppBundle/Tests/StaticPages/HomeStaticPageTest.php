@@ -21,4 +21,9 @@ class HomeStaticPageTest extends PageTestCase
             $this->requestPage()->filter('title')->text()
         );
     }
+
+    public function testLinkToSignup()
+    {
+        $this->linkTest('Sign up now!', 'sancho_app_user_new');
+    }
 }

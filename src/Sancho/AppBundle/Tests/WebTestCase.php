@@ -28,4 +28,15 @@ class WebTestCase extends BaseTestCase
                                      ->get('router')
                                      ->generate($routeName);
     }
+
+    protected function linkTest($link, $route)
+    {
+        $link = $this->requestPage()->selectLink($link)->link();
+        $this->client->click($link);
+
+        $this->assertEquals(
+            $this->generatePath($route),
+            $this->client->getRequest()->getRequestUri()
+        );
+    }
 }

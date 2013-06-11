@@ -11,6 +11,6 @@ class UserControllerTest extends PageTestCase
 
     protected function requestPage()
     {
-        return $this->request('GET', 'sancho_app_user_create');
+        return $this->request('GET', 'sancho_app_user_new');
     }
 }
