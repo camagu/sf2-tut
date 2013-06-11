@@ -2,32 +2,68 @@
 
 namespace Sancho\AppBundle\Tests;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Sancho\AppBundle\Twig\SanchoAppExtension;
 
-class PageTestCase extends WebTestCase
+abstract class PageTestCase extends WebTestCase
 {
-    protected $baseTitle = 'Symfony2 Tutorial Sample App';
-
-    public function setUp()
+    public function testHeadingText()
     {
-        parent::setUp();
-        $this->client = static::createClient();
+        if (!isset($this->heading)) {
+            throw new \Exception("Must declare \$heading in ".get_class($this));
+        }
+
+        $this->assertContains(
+            $this->heading,
+            $this->requestPage()->filter('h1')->text()
+        );
     }
 
-    protected function request($method, $route)
+    public function testPageTitleText()
     {
-        return $this->client->request($method, $this->path($route));
+        if (!isset($this->pageTitle)) {
+            throw new \Exception("Must declare \$pageTitle in ".get_class($this));
+        }
+
+        $this->assertContains(
+            $this->fullTitle($this->pageTitle),
+            $this->requestPage()->filter('title')->text()
+        );
     }
 
-    protected function path($routeName)
+    /**
+     * @dataProvider layoutLinksProvider
+     */
+    public function testLayoutLinks($link, $expected)
     {
-        return static::createClient()->getContainer()
-                                     ->get('router')
-                                     ->generate($routeName);
+        $link = $this->requestPage()->selectLink($link)->link();
+        $this->client->click($link);
+
+        $this->assertEquals(
+            $expected,
+            $this->client->getRequest()->getRequestUri()
+        );
     }
 
     protected function fullTitle($title = '')
     {
-        return $this->baseTitle . ($title ? " | {$title}" : '');
+        $twig = new \Twig_Environment(new \Twig_Loader_String(), array('cache' => false));
+        $twig->addExtension(new SanchoAppExtension());
+
+        $template = $twig->loadTemplate("{{ full_title(title) }}");
+
+        return $template->render(array('title' => $title));
     }
+
+    public function layoutLinksProvider()
+    {
+        return array(
+            array('About', $this->generatePath('sancho_app_about')),
+            array('Help', $this->generatePath('sancho_app_help')),
+            array('Contact', $this->generatePath('sancho_app_contact')),
+            array('Sign in', $this->generatePath('sancho_app_user_create')),
+            array('Sample App', $this->generatePath('sancho_app_home')),
+        );
+    }
+
+    abstract protected function requestPage();
 }

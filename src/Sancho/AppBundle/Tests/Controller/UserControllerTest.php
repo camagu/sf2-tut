@@ -6,21 +6,11 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class UserControllerTest extends PageTestCase
 {
-    public function testCreateHeader()
-    {
-        $crawler = $this->request('GET', 'sancho_app_user_create');
-        $this->assertContains(
-            'Sign up',
-            $crawler->filter('h1')->text()
-        );
-    }
+    protected $heading = 'Sign up';
+    protected $pageTitle = 'Sign up';
 
-    public function testCreateTitle()
+    protected function requestPage()
     {
-        $crawler = $this->request('GET', 'sancho_app_user_create');
-        $this->assertContains(
-            $this->fullTitle('Sign up'),
-            $crawler->filter('title')->text()
-        );
+        return $this->request('GET', 'sancho_app_user_create');
     }
 }

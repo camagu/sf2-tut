@@ -6,25 +6,19 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class HomeStaticPageTest extends PageTestCase
 {
-    public function setUp()
+    protected $heading = 'Sample App';
+    protected $pageTitle = '';
+
+    protected function requestPage()
     {
-        parent::setUp();
-        $this->crawler = $this->request('GET', 'sancho_app_home');
+        return $this->request('GET', 'sancho_app_home');
     }
 
-    public function testHeader()
+    public function testPageTitleShouldNotContainHome()
     {
-        $this->assertContains(
-            'Sample App',
-            $this->crawler->filter('h1')->text()
+        $this->assertNotContains(
+            'Home',
+            $this->requestPage()->filter('title')->text()
         );
-    }
-
-    public function testTitle()
-    {
-        $title = $this->crawler->filter('title')->text();
-
-        $this->assertNotContains(' | Home', $title);
-        $this->assertContains($this->fullTitle(), $title);
     }
 }

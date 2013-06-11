@@ -6,25 +6,11 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class ContactStaticPageTest extends PageTestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-        $this->crawler = $this->request('GET', 'sancho_app_contact');
-    }
+    protected $heading = 'Contact';
+    protected $pageTitle = 'Contact';
 
-    public function testHeader()
+    protected function requestPage()
     {
-        $this->assertContains(
-            'Contact',
-            $this->crawler->filter('h1')->text()
-        );
-    }
-
-    public function testTitle()
-    {
-        $this->assertContains(
-            $this->fullTitle('Contact'),
-            $this->crawler->filter('title')->text()
-        );
+        return $this->request('GET', 'sancho_app_contact');
     }
 }
