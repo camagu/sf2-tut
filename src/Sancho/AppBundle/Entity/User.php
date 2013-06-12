@@ -39,7 +39,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @assert\Email()
      */
@@ -56,7 +56,7 @@ class User implements UserInterface
      * @var datatime $created
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", unique=true)
+     * @ORM\Column(type="datetime")
      */
     private $created;
 

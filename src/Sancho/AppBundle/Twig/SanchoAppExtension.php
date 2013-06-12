@@ -10,7 +10,11 @@ class SanchoAppExtension extends \Twig_Extension
             new \Twig_SimpleFunction('full_title', function($title = '') {
                 return 'Symfony2 Tutorial Sample App' .
                        ($title ? " | {$title}" : '');
-            })
+            }),
+            new \Twig_SimpleFunction('gravatar_for', function($email) {
+                $gravatarId = md5(strtolower(trim($email)));
+                return "https://www.gravatar.com/avatar/{$gravatarId}";
+            }),
         );
     }
 

@@ -4,7 +4,7 @@ namespace Sancho\AppBundle\Tests\Controller;
 
 use Sancho\AppBundle\Tests\PageTestCase;
 
-class UserControllerTest extends PageTestCase
+class NewActionTest extends PageTestCase
 {
     protected $heading = 'Sign up';
     protected $pageTitle = 'Sign up';

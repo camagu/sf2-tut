@@ -4,6 +4,7 @@ namespace Sancho\AppBundle\Tests\Entity;
 
 use Sancho\AppBundle\Entity\User;
 use Sancho\AppBundle\Test\EntityTestCase;
+use Sancho\AppBundle\Tests\Fixtures\UserFixture;
 
 class UserTest extends EntityTestCase
 {
@@ -11,12 +12,7 @@ class UserTest extends EntityTestCase
 
     public function getFixture()
     {
-        $user = new User();
-        $user->setName('Example User');
-        $user->setEmail('user@example.loc');
-        $user->setPassword('asdf1238');
-
-        return $user;
+        return UserFixture::single();
     }
 
     public function testImplementsUserInterface()

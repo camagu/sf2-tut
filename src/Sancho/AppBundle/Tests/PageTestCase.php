@@ -2,9 +2,10 @@
 
 namespace Sancho\AppBundle\Tests;
 
+use Sancho\AppBundle\Test\ClientTestCase;
 use Sancho\AppBundle\Twig\SanchoAppExtension;
 
-abstract class PageTestCase extends WebTestCase
+abstract class PageTestCase extends ClientTestCase
 {
     public function testHeadingText()
     {

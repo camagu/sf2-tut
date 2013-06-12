@@ -2,37 +2,19 @@
 
 namespace Sancho\AppBundle\Test;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-abstract class EntityTestCase extends WebTestCase
+abstract class EntityTestCase extends TransactionTestCase
 {
     public function setUp()
     {
         parent::setUp();
 
-        static::$kernel = static::createKernel();
-        static::$kernel->boot();
-
-        $this->validator = static::$kernel->getContainer()
-            ->get('validator');
-
-        $this->em = static::$kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
-
-        $this->em->getConnection()->beginTransaction();
+        $this->validator = $this->get('validator');
 
         $this->fixture = $this->getFixture();
 
         if ($this->fixtureAlias) {
             $this->{$this->fixtureAlias} = $this->fixture;
         }
-    }
-
-    public function tearDown()
-    {
-        $this->em->getConnection()->rollback();
-        $this->em->close();
     }
 
     abstract protected function getFixture();
@@ -70,6 +52,9 @@ abstract class EntityTestCase extends WebTestCase
 
     abstract public function accessorProvider();
 
+    /**
+     * @todo Create custom constraint
+     */
     protected function validate($entity)
     {
         return !count($this->validator->validate($entity));
@@ -77,7 +62,7 @@ abstract class EntityTestCase extends WebTestCase
 
     protected function save($entity)
     {
-        $this->em->persist($entity);
-        $this->em->flush();
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
     }
 }

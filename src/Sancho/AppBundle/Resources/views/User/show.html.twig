@@ -1,5 +1,16 @@
 {% extends 'SanchoAppBundle::layout.html.twig' %}
 
+{% block title %}{{ full_title(entity.name) }}{% endblock %}
+
 {% block body %}
-    {{ entity.name }}, {{ entity.email }}
+    <div class="row">
+        <aside calss="span4">
+            <section>
+                <h1>
+                    <img src="{{ gravatar_for(entity.email) }}" alt="{{ entity.name }}" class="gravatar">
+                    {{ entity.name }}
+                </h1>
+            </section>
+        </aside>
+    </div>
 {% endblock %}
