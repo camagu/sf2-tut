@@ -6,12 +6,20 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class HomeStaticPageTest extends PageTestCase
 {
-    protected $heading = 'Sample App';
-    protected $pageTitle = '';
+    protected  function getHeading()
+    {
+        return 'Sample App';
+    }
+
+    protected function getPageTitle()
+    {
+        return '';
+    }
 
     protected function requestPage()
     {
-        return $this->request('GET', 'sancho_app_home');
+        $path = $this->getUrl('sancho_app_home');
+        return $this->fetchCrawler($path);
     }
 
     public function testPageTitleShouldNotContainHome()
@@ -24,6 +32,7 @@ class HomeStaticPageTest extends PageTestCase
 
     public function testLinkToSignup()
     {
-        $this->linkTest('Sign up now!', 'sancho_app_user_new');
+        $crawler = $this->requestPage();
+        $this->linkTest($crawler, 'Sign up now!', 'sancho_app_user_new');
     }
 }

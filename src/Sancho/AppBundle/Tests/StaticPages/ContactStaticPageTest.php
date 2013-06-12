@@ -6,11 +6,21 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class ContactStaticPageTest extends PageTestCase
 {
-    protected $heading = 'Contact';
-    protected $pageTitle = 'Contact';
+    private $title = 'Contact';
+
+    protected  function getHeading()
+    {
+        return $this->title;
+    }
+
+    protected function getPageTitle()
+    {
+        return $this->title;
+    }
 
     protected function requestPage()
     {
-        return $this->request('GET', 'sancho_app_contact');
+        $path = $this->getUrl('sancho_app_contact');
+        return $this->fetchCrawler($path);
     }
 }

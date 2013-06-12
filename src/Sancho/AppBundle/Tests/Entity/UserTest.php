@@ -8,11 +8,19 @@ use Sancho\AppBundle\Tests\Fixtures\UserFixture;
 
 class UserTest extends EntityTestCase
 {
-    protected $fixtureAlias = 'user';
+    protected $entityAlias = 'user';
 
-    public function getFixture()
+    protected $fixtures = array(
+        'Sancho\AppBundle\Tests\Fixtures\LoadUserData',
+    );
+
+    public function getEntity()
     {
-        return UserFixture::single();
+        $user = $this->get('doctrine')
+            ->getRepository('SanchoAppBundle:User')
+            ->findOneBy(array());
+
+        return $user;
     }
 
     public function testImplementsUserInterface()
@@ -23,13 +31,32 @@ class UserTest extends EntityTestCase
         );
     }
 
+    public function accessorProvider()
+    {
+        return array(
+            array('name', 'Another Example User'),
+            array('email', 'another_user@example.loc'),
+            array('password', '12345678'),
+            array('plainPassword', '0987654321'),
+        );
+    }
+
+    public function getterProvider()
+    {
+        return array(
+            array('id'),
+            array('created'),
+            array('updated'),
+        );
+    }
+
     /**
      * @dataProvider nameValueProvider
      */
     public function testNameValidations($value, $valid, $message)
     {
         $this->user->setName($value);
-        $this->assertEquals($valid, $this->validate($this->user), $message);
+        $this->isValid($this->user, $valid, $message);
     }
 
     public function nameValueProvider()
@@ -46,7 +73,7 @@ class UserTest extends EntityTestCase
     public function testEmailValidations($value, $valid, $message)
     {
         $this->user->setEmail($value);
-        $this->assertEquals($valid, $this->validate($this->user), $message);
+        $this->isValid($this->user, $valid, $message);
     }
 
     public function emailValueProvider()
@@ -84,9 +111,7 @@ class UserTest extends EntityTestCase
     public function testEmailUniqueness()
     {
         $userWithSameEmail = clone $this->user;
-        $this->save($userWithSameEmail);
-
-        $this->assertFalse($this->validate($this->user));
+        $this->isValid($userWithSameEmail, false);
     }
 
     public function testEmailIsDowncased()
@@ -108,7 +133,7 @@ class UserTest extends EntityTestCase
     public function testPlainPasswordValidations($value, $valid, $message)
     {
         $this->user->setPlainPassword($value);
-        $this->assertEquals($valid, $this->validate($this->user), $message);
+        $this->isValid($this->user, $valid, $message);
     }
 
     public function plainPasswordValueProvider()
@@ -140,22 +165,4 @@ class UserTest extends EntityTestCase
         );
     }
 
-    public function accessorProvider()
-    {
-        return array(
-            array('name', 'Another Example User'),
-            array('email', 'another_user@example.loc'),
-            array('password', '12345678'),
-            array('plainPassword', '0987654321'),
-        );
-    }
-
-    public function getterProvider()
-    {
-        return array(
-            array('id'),
-            array('created'),
-            array('updated'),
-        );
-    }
 }

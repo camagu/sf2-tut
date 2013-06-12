@@ -6,11 +6,21 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class NewActionTest extends PageTestCase
 {
-    protected $heading = 'Sign up';
-    protected $pageTitle = 'Sign up';
+    private $title = 'Sign up';
+
+    protected  function getHeading()
+    {
+        return $this->title;
+    }
+
+    protected function getPageTitle()
+    {
+        return $this->title;
+    }
 
     protected function requestPage()
     {
-        return $this->request('GET', 'sancho_app_user_new');
+        $path = $this->getUrl('sancho_app_user_new');
+        return $this->fetchCrawler($path);
     }
 }

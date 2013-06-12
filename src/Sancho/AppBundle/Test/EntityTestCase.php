@@ -2,27 +2,31 @@
 
 namespace Sancho\AppBundle\Test;
 
-abstract class EntityTestCase extends TransactionTestCase
+abstract class EntityTestCase extends BaseTestCase
 {
+    protected $fixtures = array();
+
     public function setUp()
     {
         parent::setUp();
 
-        $this->validator = $this->get('validator');
+        $this->loadFixtures($this->fixtures);
 
-        $this->fixture = $this->getFixture();
+        $this->entity = $this->getEntity();
 
-        if ($this->fixtureAlias) {
-            $this->{$this->fixtureAlias} = $this->fixture;
+        if ($this->entityAlias) {
+            $this->{$this->entityAlias} = $this->entity;
         }
     }
 
-    abstract protected function getFixture();
+    abstract protected function getEntity();
 
-    public function testFixture()
+    public function testEntity()
     {
-        $this->assertTrue($this->validate($this->fixture));
+        $this->isValid($this->entity);
     }
+
+    abstract public function accessorProvider();
 
     /**
      * @dataProvider accessorProvider
@@ -32,12 +36,14 @@ abstract class EntityTestCase extends TransactionTestCase
         $setter = 'set'.ucfirst($attr);
         $getter = 'get'.ucfirst($attr);
 
-        $this->assertTrue(method_exists($this->fixture, $setter), "Object has $setter method");
-        $this->assertTrue(method_exists($this->fixture, $getter), "Object has $getter method");
+        $this->assertTrue(method_exists($this->entity, $setter), "Object has $setter method");
+        $this->assertTrue(method_exists($this->entity, $getter), "Object has $getter method");
 
-        $this->assertEquals($this->fixture, $this->fixture->$setter($value));
-        $this->assertEquals($value, $this->fixture->$getter());
+        $this->assertEquals($this->entity, $this->entity->$setter($value));
+        $this->assertEquals($value, $this->entity->$getter());
     }
+
+    abstract public function getterProvider();
 
     /**
      * @dataProvider getterProvider
@@ -45,24 +51,26 @@ abstract class EntityTestCase extends TransactionTestCase
     public function testGetters($attr)
     {
         $getter = 'get'.ucfirst($attr);
-        $this->assertTrue(method_exists($this->fixture, $getter), "Object has $getter method");
+        $this->assertTrue(method_exists($this->entity, $getter), "Object has $getter method");
     }
 
-    abstract public function getterProvider();
-
-    abstract public function accessorProvider();
-
-    /**
-     * @todo Create custom constraint
-     */
-    protected function validate($entity)
+    protected function isValid($entity, $success = true, $message = '')
     {
-        return !count($this->validator->validate($entity));
+        $validator = $this->get('validator');
+        $result = !count($validator->validate($entity));
+
+        if ($success) {
+            $this->assertTrue($result, "The entity is not valid. {$message}");
+        } else {
+            $this->assertFalse($result, "The entity is valid. {$message}");
+        }
     }
 
     protected function save($entity)
     {
-        $this->getEntityManager()->persist($entity);
-        $this->getEntityManager()->flush();
+        $em = $this->get('doctrine')->getManager();
+
+        $em->persist($entity);
+        $em->flush();
     }
 }

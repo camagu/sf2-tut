@@ -2,31 +2,29 @@
 
 namespace Sancho\AppBundle\Tests;
 
-use Sancho\AppBundle\Test\ClientTestCase;
+use Sancho\AppBundle\Test\RequestTestCase;
 use Sancho\AppBundle\Twig\SanchoAppExtension;
 
-abstract class PageTestCase extends ClientTestCase
+abstract class PageTestCase extends RequestTestCase
 {
+    abstract protected function getHeading();
+
+    abstract protected function getPageTitle();
+
+    abstract protected function requestPage();
+
     public function testHeadingText()
     {
-        if (!isset($this->heading)) {
-            throw new \Exception("Must declare \$heading in ".get_class($this));
-        }
-
         $this->assertContains(
-            $this->heading,
+            $this->getHeading(),
             $this->requestPage()->filter('h1')->text()
         );
     }
 
     public function testPageTitleText()
     {
-        if (!isset($this->pageTitle)) {
-            throw new \Exception("Must declare \$pageTitle in ".get_class($this));
-        }
-
         $this->assertContains(
-            $this->fullTitle($this->pageTitle),
+            $this->fullTitle($this->getPageTitle()),
             $this->requestPage()->filter('title')->text()
         );
     }
@@ -36,7 +34,8 @@ abstract class PageTestCase extends ClientTestCase
      */
     public function testLayoutLinks($link, $route)
     {
-        $this->linkTest($link, $route);
+        $crawler = $this->requestPage();
+        $this->linkTest($crawler, $link, $route);
     }
 
     protected function fullTitle($title = '')
@@ -60,5 +59,4 @@ abstract class PageTestCase extends ClientTestCase
         );
     }
 
-    abstract protected function requestPage();
 }

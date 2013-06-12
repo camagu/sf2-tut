@@ -6,11 +6,21 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class HelpStaticPageTest extends PageTestCase
 {
-    protected $heading = 'Help';
-    protected $pageTitle = 'Help';
+    private $title = 'Help';
+
+    protected  function getHeading()
+    {
+        return $this->title;
+    }
+
+    protected function getPageTitle()
+    {
+        return $this->title;
+    }
 
     protected function requestPage()
     {
-        return $this->request('GET', 'sancho_app_help');
+        $path = $this->getUrl('sancho_app_help');
+        return $this->fetchCrawler($path);
     }
 }

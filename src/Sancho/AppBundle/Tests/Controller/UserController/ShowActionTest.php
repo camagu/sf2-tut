@@ -12,16 +12,28 @@ class ShowActionTest extends PageTestCase
     {
         parent::setUp();
 
-        $this->user = UserFixture::single();
-        $this->getEntityManager()->persist($this->user);
-        $this->getEntityManager()->flush();
+        $this->loadFixtures(array(
+            'Sancho\AppBundle\Tests\Fixtures\LoadUserData',
+        ));
 
-        $this->heading = $this->pageTitle = $this->user->getName();
+        $this->user = $this->get('doctrine')
+            ->getRepository('SanchoAppBundle:User')
+            ->findOneBy(array());
+    }
+
+    protected  function getHeading()
+    {
+        return $this->getPageTitle();
+    }
+
+    protected function getPageTitle()
+    {
+        return $this->user->getName();
     }
 
     protected function requestPage()
     {
-        $path = $this->generatePath('sancho_app_user_show', array('id' => $this->user->getId()));
-        return $this->request('GET', $path);
+        $path = $this->getUrl('sancho_app_user_show', array('id' => $this->user->getId()));
+        return $this->fetchCrawler($path);
     }
 }

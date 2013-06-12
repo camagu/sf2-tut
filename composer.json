@@ -26,7 +26,10 @@
         "leafo/lessphp": "0.3.*",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "doctrine/migrations": "dev-master",
-        "doctrine/doctrine-migrations-bundle": "dev-master"
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "doctrine/data-fixtures": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "liip/functional-test-bundle": "dev-master"
     },
     "repositories": [
         {
