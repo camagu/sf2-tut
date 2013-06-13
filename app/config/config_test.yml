@@ -7,6 +7,8 @@ framework:
         storage_id: session.storage.filesystem
     profiler:
         enabled: false
+    csrf_protection:
+        enabled: false
 
 web_profiler:
     toolbar: false
@@ -22,3 +24,6 @@ doctrine:
     dbal:
         driver: pdo_sqlite
         path: %kernel.cache_dir%/test.db
+security:
+    encoders:
+        Sancho\AppBundle\Entity\User: sha1

@@ -4,13 +4,9 @@ namespace Sancho\AppBundle\Test;
 
 abstract class EntityTestCase extends BaseTestCase
 {
-    protected $fixtures = array();
-
     public function setUp()
     {
         parent::setUp();
-
-        $this->loadFixtures($this->fixtures);
 
         $this->entity = $this->getEntity();
 
@@ -54,15 +50,27 @@ abstract class EntityTestCase extends BaseTestCase
         $this->assertTrue(method_exists($this->entity, $getter), "Object has $getter method");
     }
 
-    protected function isValid($entity, $success = true, $message = '')
+    protected function isValid($entity, $success = true, $message = '', $groups = null)
     {
         $validator = $this->get('validator');
-        $result = !count($validator->validate($entity));
+        $result = !count($validator->validate($entity, $groups));
 
         if ($success) {
             $this->assertTrue($result, "The entity is not valid. {$message}");
         } else {
             $this->assertFalse($result, "The entity is valid. {$message}");
+        }
+    }
+
+    protected function isPropertyValid($entity, $property, $success = true, $message = '', $groups = null)
+    {
+        $validator = $this->get('validator');
+        $result = !count($validator->validateProperty($entity, $property, $groups));
+
+        if ($success) {
+            $this->assertTrue($result, "The property is not valid. {$message}");
+        } else {
+            $this->assertFalse($result, "The property is valid. {$message}");
         }
     }
 

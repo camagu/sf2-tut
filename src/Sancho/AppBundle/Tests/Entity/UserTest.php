@@ -56,7 +56,7 @@ class UserTest extends EntityTestCase
     public function testNameValidations($value, $valid, $message)
     {
         $this->user->setName($value);
-        $this->isValid($this->user, $valid, $message);
+        $this->isPropertyValid($this->user, 'name', $valid, $message);
     }
 
     public function nameValueProvider()
@@ -73,7 +73,7 @@ class UserTest extends EntityTestCase
     public function testEmailValidations($value, $valid, $message)
     {
         $this->user->setEmail($value);
-        $this->isValid($this->user, $valid, $message);
+        $this->isPropertyValid($this->user, 'email', $valid, $message);
     }
 
     public function emailValueProvider()
@@ -130,16 +130,17 @@ class UserTest extends EntityTestCase
     /**
      * @dataProvider plainPasswordValueProvider
      */
-    public function testPlainPasswordValidations($value, $valid, $message)
+    public function testPlainPasswordValidations($value, $valid, $message, $groups = null)
     {
         $this->user->setPlainPassword($value);
-        $this->isValid($this->user, $valid, $message);
+        $this->isPropertyValid($this->user, 'plainPassword', $valid, $message, $groups);
     }
 
     public function plainPasswordValueProvider()
     {
         return array(
-            array(str_repeat('a', 5), false, "Plain password can't be shorter than 6"),
+            array('', false, "Plain password can't be blank", array('Registration')),
+            array(str_repeat('a', 5), false, "Plain password can't be shorter than 6", array('Registration')),
         );
     }
 

@@ -48,7 +48,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=40)
+     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
 
@@ -71,7 +71,8 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Assert\Length(min=6)
+     * @Assert\NotBlank(groups={"Registration"})
+     * @Assert\Length(min=6, groups={"Registration"})
      */
     private $plainPassword;
 

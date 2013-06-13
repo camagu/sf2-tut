@@ -29,7 +29,8 @@
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "liip/functional-test-bundle": "dev-master"
+        "liip/functional-test-bundle": "dev-master",
+        "ircmaxell/password-compat": "1.0.*"
     },
     "repositories": [
         {

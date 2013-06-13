@@ -7,6 +7,18 @@ use Sancho\AppBundle\Twig\SanchoAppExtension;
 
 abstract class PageTestCase extends RequestTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->init();
+        $this->crawler = $this->requestPage();
+    }
+
+    protected function init()
+    {
+
+    }
+
     abstract protected function getHeading();
 
     abstract protected function getPageTitle();
@@ -17,7 +29,7 @@ abstract class PageTestCase extends RequestTestCase
     {
         $this->assertContains(
             $this->getHeading(),
-            $this->requestPage()->filter('h1')->text()
+            $this->crawler->filter('h1')->text()
         );
     }
 
@@ -25,7 +37,7 @@ abstract class PageTestCase extends RequestTestCase
     {
         $this->assertContains(
             $this->fullTitle($this->getPageTitle()),
-            $this->requestPage()->filter('title')->text()
+            $this->crawler->filter('title')->text()
         );
     }
 
@@ -34,8 +46,7 @@ abstract class PageTestCase extends RequestTestCase
      */
     public function testLayoutLinks($link, $route)
     {
-        $crawler = $this->requestPage();
-        $this->linkTest($crawler, $link, $route);
+        $this->linkTest($link, $route);
     }
 
     protected function fullTitle($title = '')
@@ -58,5 +69,4 @@ abstract class PageTestCase extends RequestTestCase
             array('Sample App', 'sancho_app_home'),
         );
     }
-
 }

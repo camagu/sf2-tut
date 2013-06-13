@@ -32,7 +32,6 @@ class HomeStaticPageTest extends PageTestCase
 
     public function testLinkToSignup()
     {
-        $crawler = $this->requestPage();
-        $this->linkTest($crawler, 'Sign up now!', 'sancho_app_user_new');
+        $this->linkTest('Sign up now!', 'sancho_app_user_new');
     }
 }

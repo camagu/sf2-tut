@@ -18,6 +18,8 @@
         {% endblock %}
 
         <div class="container">
+            {% include('SanchoAppBundle:Partials:_flash.html.twig') %}
+
             {% block body %}{% endblock %}
 
             {% block footer %}

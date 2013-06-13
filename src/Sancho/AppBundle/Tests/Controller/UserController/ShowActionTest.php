@@ -8,14 +8,12 @@ use Sancho\AppBundle\Tests\PageTestCase;
 
 class ShowActionTest extends PageTestCase
 {
-    public function setUp()
+    protected $fixtures = array(
+        'Sancho\AppBundle\Tests\Fixtures\LoadUserData',
+    );
+
+    protected function init()
     {
-        parent::setUp();
-
-        $this->loadFixtures(array(
-            'Sancho\AppBundle\Tests\Fixtures\LoadUserData',
-        ));
-
         $this->user = $this->get('doctrine')
             ->getRepository('SanchoAppBundle:User')
             ->findOneBy(array());
