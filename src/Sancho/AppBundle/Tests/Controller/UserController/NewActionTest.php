@@ -38,13 +38,19 @@ class NewActionTest extends PageTestCase
 
         try {
             $form = $this->crawler->selectButton($this->submit)->form();
-            $this->client->submit($form);
+            $this->crawler = $this->client->submit($form);
         } catch(\Exception $e) {
             $this->fail($e->getMessage());
         }
 
         $count = $this->getUserCount();
-        $this->assertEquals($oldCount, $count);
+        $this->assertEquals($oldCount, $count, "Creates a user");
+
+        $this->assertContains(
+            'should not',
+            $this->crawler->text(),
+            "Doesn't show error messages"
+        );
     }
 
     public function testSubmitFormWithValidData()
@@ -55,7 +61,7 @@ class NewActionTest extends PageTestCase
 
         try {
             $form = $this->crawler->selectButton($this->submit)->form();
-            $this->client->submit($form, array(
+            $this->crawler = $this->client->submit($form, array(
                 "{$namespace}[name]"                  => 'Don Señor',
                 "{$namespace}[email]"                 => 'don@senor.loc',
                 "{$namespace}[plainPassword][first]"  => '12345678',
@@ -66,7 +72,7 @@ class NewActionTest extends PageTestCase
         }
 
         $count = $this->getUserCount();
-        $this->assertNotEquals($oldCount, $count);
+        $this->assertNotEquals($oldCount, $count, "Doesn't create user");
 
         $this->crawler = $this->client->followRedirect();
 
@@ -76,12 +82,14 @@ class NewActionTest extends PageTestCase
 
         $this->assertEquals(
             $expectedUrl,
-            $this->client->getRequest()->getRequestUri()
+            $this->client->getRequest()->getRequestUri(),
+            "Doesn't redirect"
         );
 
         $this->assertContains(
             'Welcome to the Sample App!',
-            $this->crawler->text()
+            $this->crawler->text(),
+            "Doesn't set flash message"
         );
     }
 

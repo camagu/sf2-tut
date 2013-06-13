@@ -11,9 +11,9 @@ class SanchoAppExtension extends \Twig_Extension
                 return 'Symfony2 Tutorial Sample App' .
                        ($title ? " | {$title}" : '');
             }),
-            new \Twig_SimpleFunction('gravatar_for', function($email) {
+            new \Twig_SimpleFunction('gravatar_for', function($email, $size = 50) {
                 $gravatarId = md5(strtolower(trim($email)));
-                return "https://www.gravatar.com/avatar/{$gravatarId}";
+                return "https://www.gravatar.com/avatar/{$gravatarId}?s={$size}";
             }),
         );
     }
