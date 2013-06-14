@@ -1,6 +1,6 @@
 <?php
 
-namespace Sancho\AppBundle\Test;
+namespace Sancho\TestBundle\Test;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 

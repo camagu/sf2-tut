@@ -1,6 +1,6 @@
 <?php
 
-namespace Sancho\AppBundle\Test;
+namespace Sancho\TestBundle\Test;
 
 class RequestTestCase extends BaseTestCase
 {

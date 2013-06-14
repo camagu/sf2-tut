@@ -20,7 +20,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->user = new User();
     }
 
-    public function testCreateUser()
+    protected function saveUserTest($method)
     {
         $this->objectManager
             ->expects($this->once())
@@ -45,44 +45,22 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('encodedPassword'));
 
         $this->user->setPlainPassword('password');
-        $this->userManager->createUser($this->user);
+        $this->userManager->{$method}($this->user);
 
         $this->assertEquals(
             'encodedPassword',
             $this->user->getPassword()
         );
+
+    }
+
+    public function testCreateUser()
+    {
+        $this->saveUserTest('createUser');
     }
 
     public function testUpdateUser()
     {
-        $this->objectManager
-            ->expects($this->once())
-            ->method('persist')
-            ->with($this->equalTo($this->user));
-
-        $this->objectManager
-            ->expects($this->once())
-            ->method('flush');
-
-        $encoder = $this->getMock('Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface');
-
-        $this->encoderFactory
-            ->expects($this->once())
-            ->method('getEncoder')
-            ->will($this->returnValue($encoder));
-
-        $encoder
-            ->expects($this->once())
-            ->method('encodePassword')
-            ->with('password', $this->user->getSalt())
-            ->will($this->returnValue('encodedPassword'));
-
-        $this->user->setPlainPassword('password');
-        $this->userManager->updateUser($this->user);
-
-        $this->assertEquals(
-            'encodedPassword',
-            $this->user->getPassword()
-        );
+        $this->saveUserTest('updateUser');
     }
 }

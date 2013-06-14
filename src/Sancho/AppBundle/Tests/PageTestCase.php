@@ -2,7 +2,7 @@
 
 namespace Sancho\AppBundle\Tests;
 
-use Sancho\AppBundle\Test\RequestTestCase;
+use Sancho\TestBundle\Test\RequestTestCase;
 use Sancho\AppBundle\Twig\SanchoAppExtension;
 
 abstract class PageTestCase extends RequestTestCase

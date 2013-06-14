@@ -3,7 +3,7 @@
 namespace Sancho\AppBundle\Tests\Entity;
 
 use Sancho\AppBundle\Entity\User;
-use Sancho\AppBundle\Test\EntityTestCase;
+use Sancho\TestBundle\Test\EntityTestCase;
 use Sancho\AppBundle\Tests\Fixtures\UserFixture;
 
 class UserTest extends EntityTestCase

@@ -2,7 +2,7 @@
 
 namespace Sancho\AppBundle\Tests\Controller\SessionController;
 
-use Sancho\AppBundle\Test\RequestTestCase;
+use Sancho\TestBundle\Test\RequestTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class DeleteActionTest extends RequestTestCase
