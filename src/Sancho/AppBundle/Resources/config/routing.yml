@@ -25,3 +25,13 @@ sancho_app_contact:
 sancho_app_user:
     resource: "@SanchoAppBundle/Controller/UserController.php"
     type: annotation
+
+sancho_app_session:
+    resource: "@SanchoAppBundle/Controller/SessionController.php"
+    type: annotation
+
+sancho_app_session_check:
+    pattern: /signin_check
+
+sancho_app_session_delete:
+    pattern: /signout

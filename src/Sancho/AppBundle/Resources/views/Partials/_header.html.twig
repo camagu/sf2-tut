@@ -6,7 +6,22 @@
                 <ul class="nav pull-right">
                     <li><a href="{{ path('sancho_app_home') }}">Home</a></li>
                     <li><a href="{{ path('sancho_app_help') }}">Help</a></li>
-                    <li><a href="{{ path('sancho_app_user_new') }}">Sign in</a></li>
+                    {% if is_granted("ROLE_USER") %}
+                        <li><a href="#">Users</a></li>
+                        <li id="fat-menu" class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Account <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('sancho_app_user_show', {id: app.user.id}) }}">Profile</a></li>
+                                <li><a href="#">Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ path('sancho_app_session_delete') }}">Sign out</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ path('sancho_app_session_new') }}">Sign in</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>

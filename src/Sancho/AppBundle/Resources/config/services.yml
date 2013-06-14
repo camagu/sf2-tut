@@ -6,3 +6,14 @@ services:
         class: Sancho\AppBundle\Twig\SanchoAppExtension
         tags:
             - { name: twig.extension }
+    sancho_app.user_manager:
+        class: Sancho\AppBundle\Entity\UserManager
+        arguments:
+            objectManager:  @doctrine.orm.entity_manager
+            encoderFactory: @security.encoder_factory
+
+    sancho_app.handler.authentication_handler:
+        class: Sancho\AppBundle\Handler\AuthenticationHandler
+        arguments:
+            router: @router
+            route: sancho_app_user_show

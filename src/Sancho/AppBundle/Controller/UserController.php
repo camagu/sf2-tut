@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sancho\AppBundle\Entity\User;
 use Sancho\AppBundle\Form\UserRegistrationType;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class UserController extends Controller
 {
@@ -39,17 +40,11 @@ class UserController extends Controller
 
         $form->bind($request);
         if ($form->isValid()) {
-            $encoder = $this->get('security.encoder_factory')
-                ->getEncoder($entity);
+            $userManager = $this->get('sancho_app.user_manager');
+            $userManager->createUser($entity);
 
-            $password = $encoder->encodePassword($entity->getPlainPassword(), $entity->getSalt());
-            $entity->setPassword($password);
-
-            $em = $this->getDoctrine()
-                ->getManager();
-
-            $em->persist($entity);
-            $em->flush();
+            $token = new UsernamePasswordToken($entity, null, 'main', array('ROLE_USER'));
+            $this->get('security.context')->setToken($token);
 
             $this->get('session')->getFlashBag()->add('success', 'Welcome to the Sample App!');
             return $this->redirect($this->generateUrl('sancho_app_user_show', array('id' => $entity->getId())));

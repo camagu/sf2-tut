@@ -27,3 +27,8 @@ doctrine:
 security:
     encoders:
         Sancho\AppBundle\Entity\User: sha1
+    firewalls:
+        secured_area:
+            form_login:
+                require_previous_session: false
+

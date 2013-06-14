@@ -1,0 +1,22 @@
+{% extends 'SanchoAppBundle::layout.html.twig' %}
+
+{% block title %}{{ full_title('Sign in') }}{% endblock %}
+
+{% block body %}
+    <h1>Sign in</h1>
+    <div class="row">
+        <div class="span6 offset3">
+            <form action="{{ path('sancho_app_session_check') }}" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="_password" />
+
+                <button type="submit" class="btn btn-lasrge btn-primary">Sign in</button>
+            </form>
+
+            <p>New user? <a href="{{ path('sancho_app_user_new') }}">Sign up now!</p>
+        </div>
+    </div>
+{% endblock %}

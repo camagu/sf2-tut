@@ -10,12 +10,6 @@ class NewActionTest extends PageTestCase
 
     private $submit = 'Create my account';
 
-    public function setUp()
-    {
-        parent::setUp();
-        $this->loadFixtures(array());
-    }
-
     protected  function getHeading()
     {
         return $this->title;
@@ -91,6 +85,8 @@ class NewActionTest extends PageTestCase
             $this->crawler->text(),
             "Doesn't set flash message"
         );
+
+        $this->hasLink('Sign out');
     }
 
     private function getUserCount()

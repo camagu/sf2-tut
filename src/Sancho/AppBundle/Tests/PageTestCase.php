@@ -46,7 +46,7 @@ abstract class PageTestCase extends RequestTestCase
      */
     public function testLayoutLinks($link, $route)
     {
-        $this->linkTest($link, $route);
+        $this->doesLinkPointsTo($link, $route);
     }
 
     protected function fullTitle($title = '')
@@ -62,11 +62,11 @@ abstract class PageTestCase extends RequestTestCase
     public function layoutLinksProvider()
     {
         return array(
-            array('About', 'sancho_app_about'),
-            array('Help', 'sancho_app_help'),
-            array('Contact', 'sancho_app_contact'),
-            array('Sign in', 'sancho_app_user_new'),
-            array('Sample App', 'sancho_app_home'),
+            array('About',      $this->getUrl('sancho_app_about')),
+            array('Help',       $this->getUrl('sancho_app_help')),
+            array('Contact',    $this->getUrl('sancho_app_contact')),
+            array('Sign in',    $this->getUrl('sancho_app_session_new')),
+            array('Sample App', $this->getUrl('sancho_app_home')),
         );
     }
 }

@@ -32,6 +32,8 @@ class HomeStaticPageTest extends PageTestCase
 
     public function testLinkToSignup()
     {
-        $this->linkTest('Sign up now!', 'sancho_app_user_new');
+        $this->doesLinkPointsTo('Sign up now!', $this->getUrl(
+            'sancho_app_user_new'
+        ));
     }
 }
