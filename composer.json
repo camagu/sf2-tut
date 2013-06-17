@@ -30,7 +30,11 @@
         "doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "liip/functional-test-bundle": "dev-master",
-        "ircmaxell/password-compat": "1.0.*"
+        "ircmaxell/password-compat": "1.0.*",
+        "behat/symfony2-extension": "~1.0",
+        "behat/mink-extension": "~1.1",
+        "behat/mink-browserkit-driver": "~1.1",
+        "behat/common-contexts": "~1.2"
     },
     "repositories": [
         {

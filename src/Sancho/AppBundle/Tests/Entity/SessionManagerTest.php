@@ -5,7 +5,6 @@ namespace Sancho\AppBundle\Tests\Entity;
 use Sancho\AppBundle\Entity\SessionManager;
 use Sancho\AppBundle\Tests\Fixtures\DummySecurityContext;
 use Sancho\TestBundle\Test\BaseTestCase;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class SessionManagerTest extends BaseTestCase
 {
