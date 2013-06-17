@@ -12,6 +12,12 @@ services:
             objectManager:  @doctrine.orm.entity_manager
             encoderFactory: @security.encoder_factory
 
+    sancho_app.session_manager:
+        class: Sancho\AppBundle\Entity\SessionManager
+        arguments:
+            securityContext: @security.context
+            providerKey: main
+
     sancho_app.handler.authentication_handler:
         class: Sancho\AppBundle\Handler\AuthenticationHandler
         arguments:

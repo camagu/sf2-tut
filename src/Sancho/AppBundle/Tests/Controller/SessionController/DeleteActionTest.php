@@ -3,7 +3,6 @@
 namespace Sancho\AppBundle\Tests\Controller\SessionController;
 
 use Sancho\TestBundle\Test\RequestTestCase;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class DeleteActionTest extends RequestTestCase
 {
@@ -23,12 +22,16 @@ class DeleteActionTest extends RequestTestCase
         $userManager = $this->get('sancho_app.user_manager');
         $userManager->updateUser($this->user);
 
-        $token = new UsernamePasswordToken($this->user, null, 'main', array('ROLE_USER'));
-        $this->get('security.context')->setToken($token);
+        $sessionManager = $this->get('sancho_app.session_manager');
+        $sessionManager->login($this->user);
     }
 
     public function testLogsUserOut()
     {
+        $this->assertNotEmpty(
+            $this->get('security.context')->getToken()
+        );
+
         $path = $this->getUrl('sancho_app_session_delete');
         $this->crawler = $this->client->request('GET', $path);
 
